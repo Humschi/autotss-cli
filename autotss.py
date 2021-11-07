@@ -17,6 +17,7 @@ class autotss:
         self.save_blobs()
 
     def get_devices(self):
+        print(os.getcwd())
         if not os.path.isfile('devices.json'):
             sys.exit('[ERROR] No devices.json found. Exiting...')
 
@@ -57,8 +58,9 @@ class autotss:
                 tsschecker_args = (self.tsschecker,
                                    '-d', self.devices[x]['identifier'],
                                    '-e', self.devices[x]['ecid'],
-                                   '--boardconfig', self.devices[x]['boardconfig'],
-                                   '--buildid', i['buildid'],
+                                   '-B', self.devices[x]['boardconfig'],
+                                   '-l',
+                                   '-g', '0x1111111111111111',
                                    '--save-path', save_path,
                                    '-s')
 
@@ -76,12 +78,6 @@ class autotss:
             path = tsschecker.stdout[:-1]
         else:
             sys.exit(f"[ERROR] tsschecker was not found. Build & install the latest version from 'https://github.com/DanTheMann15/tsschecker'. Exiting...")
-
-        tsschecker = subprocess.run((path), stdout=subprocess.PIPE, universal_newlines=True)
-
-        version = int(tsschecker.stdout.split('\n')[0].split('-')[1][1:])
-        if version < 321:
-            sys.exit("[ERROR] Your version of tsschecker is too old. Build & install the latest version from https://github.com/DanTheMann15/tsschecker. Exiting...")
 
         return path
 
