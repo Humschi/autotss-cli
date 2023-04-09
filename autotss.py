@@ -59,7 +59,8 @@ class autotss:
                                    '-d', self.devices[x]['identifier'],
                                    '-e', self.devices[x]['ecid'],
                                    '-B', self.devices[x]['boardconfig'],
-                                   '-l',
+                                   '--buildid', i['buildid'],
+                                   #'-l',
                                    '-g', '0x1111111111111111',
                                    '--save-path', save_path,
                                    '-s')
@@ -80,7 +81,6 @@ class autotss:
             sys.exit(f"[ERROR] tsschecker was not found. Build & install the latest version from 'https://github.com/DanTheMann15/tsschecker'. Exiting...")
 
         return path
-
 
 def main():
     autotss()
